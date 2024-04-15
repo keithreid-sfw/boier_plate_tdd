@@ -7,6 +7,7 @@ using Test
 struct Settings
 	n::Int64
 	testing::Bool
+	verbose::Bool
 end
 
 # 			2 SET
@@ -17,7 +18,12 @@ function set_n()
 end
 
 function set_testing()
-	testing::Bool   = true # false
+	testing::Bool   = false # true # false
+end
+
+function set_verbose()
+	verbose::Bool   = false # true
+	return verbose
 end
 
 # 			3 GET
@@ -25,7 +31,8 @@ end
 function get_settings()
 	n	    = set_n()
 	testing     = set_testing()
-	settings    = Settings(n, testing)
+	verbose     = set_verbose()
+	settings    = Settings(n, testing, verbose)
 	return settings
 end
 
@@ -50,8 +57,9 @@ function maybe_add_solution(attempt::Vector{Int64},
 		solutions::Vector{Vector{Int64}},
 		settings::Settings)
 	n = settings.n
+	attempt_appendage = [attempt]
 	if length(attempt) == n
-		push!(solutions, attempt)
+		solutions = vcat(solutions, attempt_appendage)
 	end
 	return solutions
 end
@@ -59,13 +67,23 @@ end
 
 #			5 VIEW
 
+function maybe_intro()
+	settings = get_settings()
+	if settings.verbose
+		println("Hello and welcome to this N Queens.")
+		println("It is a kata and it is written to give me a boiler plate TDD template.")
+		println("If you can see this then settings.verbose is flagged as true.")
+		println("The variable n is set as ", settings.n)
+	end
+end
+
 #			6 CONTROL
 
 function main()
 	settings    = get_settings()
 	n           = settings.n
 	attempt     = init_attempt(n)
-
+	maybe_intro()
 end
 
 main()
@@ -74,23 +92,58 @@ main()
 
 function test_maybe_add_solution()
 	solutions       = init_solutions()
-	settings        = Settings(4, true)
+	settings        = Settings(4, true, false)
 	attempt         = [2,4,1,3]
-	new_solutions   = nothing
 	new_solutions   = maybe_add_solution(attempt,
 					 solutions, 
 					 settings)
+	if settings.verbose
+		println("old ", solutions, " new ", new_solutions)
+	end
 	@test length(new_solutions) == 1
 
  	solutions       = init_solutions()
-	settings        = Settings(4, true)
+	settings        = Settings(4, true, false)
 	attempt         = [2,4,1]
-	new_solutions   = nothing
 	new_solutions   = maybe_add_solution(attempt,
 					 solutions, 
 					 settings)
+	if settings.verbose
+		println("old ", solutions, " new ", new_solutions)
+	end
 	@test length(new_solutions) == 0
+
+	solutions       = [[2,4,1,3]]
+	settings        = Settings(4, true, false)
+	attempt         = [3,1,4,2]
+	new_solutions   = maybe_add_solution(attempt,
+					 solutions, 
+					 settings)
+	if settings.verbose
+		println("old ", solutions, " new ", new_solutions)
+	end
+	@test length(new_solutions) == 2
+	@test new_solutions == [[2,4,1,3],[3,1,4,2]]
+
+ 	solutions       = init_solutions()
+	settings        = Settings(1, true, false)
+	attempt         = [1]
+	new_solutions   = maybe_add_solution(attempt,
+					 solutions, 
+					 settings)
+	if settings.verbose
+		println("old ", solutions, " new ", new_solutions)
+	end
+	@test new_solutions == [[1]]
+
 	println("passed maybe add solution")
+
+
+
+
+
+	
+
 end
 
 function test_init_attempt()
