@@ -41,6 +41,22 @@ function init_attempt(n::Int64)
 	return attempt
 end
 
+function init_solutions()
+	solutions::Vector{Vector{Int64}} = []
+	return solutions
+end
+
+function maybe_add_solution(attempt::Vector{Int64}, 
+		solutions::Vector{Vector{Int64}},
+		settings::Settings)
+	n = settings.n
+	if length(attempt) == n
+		push!(solutions, attempt)
+	end
+	return solutions
+end
+	
+
 #			5 VIEW
 
 #			6 CONTROL
@@ -55,6 +71,27 @@ end
 main()
 
 # 			7 TESTS
+
+function test_maybe_add_solution()
+	solutions       = init_solutions()
+	settings        = Settings(4, true)
+	attempt         = [2,4,1,3]
+	new_solutions   = nothing
+	new_solutions   = maybe_add_solution(attempt,
+					 solutions, 
+					 settings)
+	@test length(new_solutions) == 1
+
+ 	solutions       = init_solutions()
+	settings        = Settings(4, true)
+	attempt         = [2,4,1]
+	new_solutions   = nothing
+	new_solutions   = maybe_add_solution(attempt,
+					 solutions, 
+					 settings)
+	@test length(new_solutions) == 0
+	println("passed maybe add solution")
+end
 
 function test_init_attempt()
 	n = 0
@@ -91,6 +128,7 @@ function all_tests()
 	if testing
 		test_init_attempt()
 		test_get_settings()
+		test_maybe_add_solution()
 		test_set_testing()
 		println("passed all tests")
 	else
