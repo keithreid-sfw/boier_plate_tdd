@@ -191,4 +191,138 @@ end
 
 all_tests()
 
+function grow_or_throw(n::Int64,
+			attempt::Vector{Int64},
+    			banned::Vector{Vector{Int64}})
+    if length(attempt) >= n
+        return -1
+    end
+end
+
+function test_grow_or_throw()
+
+	n       = 0
+	attempt = []
+	banned  = []
+	output  = -1
+
+	n       = 1
+	attempt = []
+	banned  = []
+	output  = [1]
+
+	n       = 1
+	attempt = []
+	banned  = [1]
+	output  = -1
+
+	n       = 4
+	attempt = [2,4,1]
+	banned  = []
+	output  = [2,4,1,3]
+
+	n       = 4
+	attempt = [3,1,4]
+	banned  = []
+	output  = [3,1,4,2]
+
+	n       = 4
+	attempt = [2,4,1]
+	banned  = [2,4,1,3]
+	output  = -1
+
+	n       = 5
+	attempt = [2,4,1,3]
+	banned  = [2,4,1,3,5]
+	output  = -1
+
+	n       = 5
+	attempt = [3,1,4,2]
+	banned  = []
+	output  = [3,1,4,2,5]
+end
+
+#test_grow_or_throw()
+
+function rising_diagonal_shadow(attempt::Vector{Int64}, 
+				n::Int64)
+	attempt_length = length(attempt)
+	println("attempt",attempt)
+	range          = collect(1:attempt_length)
+	println("range", range)
+	rev_range      = reverse(range)
+	println("rev_range", rev_range)
+	shadow         = attempt .- rev_range
+	println("shadow", shadow)
+	shadow_in_bounds = [x for x in shadow if 0 < x < n+1]
+	println("shadow in bounds", shadow_in_bounds)
+	return shadow_in_bounds
+end
+
+function test_rising_diag_shadow()
+	n       = 4
+	
+	attempt = [1]
+	rds     = rising_diagonal_shadow(attempt, n)
+	@test rds == []
+
+	attempt = [2]
+	rds     = rising_diagonal_shadow(attempt, n)
+	@test rds  == [1]
+
+	attempt = [3]	
+	rds     = rising_diagonal_shadow(attempt, n)
+	@test rds == [2]
+
+	attempt = [4]
+	rds     = rising_diagonal_shadow(attempt, n)
+	@test rds == [3]
+
+	attempt = [2,4]
+	rds     = rising_diagonal_shadow(attempt, n)
+	@test rds == [3]
+
+	attempt = [2,4,1]
+	rds     = rising_diagonal_shadow(attempt, n)
+	@test rds == [3]
+	println("passed rising diagonal shadow")
+
+end
+
+test_rising_diag_shadow()
+
+function falling_diagonal_shadow(attempt::Vector{Int64}, 
+				n::Int64)
+end
+
+
+function test_falling_diagonal_shadow()
+	n       = 4
+	
+	attempt = [1]
+	fds     = falling_diagonal_shadow(attempt, n)
+
+	attempt = [2]
+	fds     = falling_diagonal_shadow(attempt, n)
+
+	attempt = [3]	
+	fds     = falling_diagonal_shadow(attempt, n)
+
+	attempt = [4]
+	fds     = falling_diagonal_shadow(attempt, n)
+	
+	attempt = [2,4]
+	fds     = falling_diagonal_shadow(attempt, n)
+
+	attempt = [2,4,1]
+	fds     = falling_diagonal_shadow(attempt, n)
+	println("passed falling diagonal shadow")
+
+end
+
+#test_falling_diagonal_shadow()
+
+
+
+
 
