@@ -4,7 +4,9 @@ Boiler plate test driven dev snippet for Julia
 happens to be an implementation of N Queens for fun
 
 --
-`
+
+
+```
 function grow_or_throw(attempt::Vector{Int64},
     banned::Vector{Vector{Int64}})
     settings = get_settings()
@@ -13,10 +15,13 @@ function grow_or_throw(attempt::Vector{Int64},
         return 0
     end
 end
-`
+```
+
+
 --
 TODO tests
 
+```
 n = 0
 attempt = []
 banned = []
@@ -33,3 +38,4 @@ banned = [1]
 throw -1
 
 
+```
