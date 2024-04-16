@@ -12,7 +12,7 @@ function grow_or_throw(attempt::Vector{Int64},
     settings = get_settings()
     n        = settings.n
     if length(attempt) >= n
-        return 0
+        return -1
     end
 end
 ```
@@ -24,18 +24,42 @@ TODO tests
 ```
 n = 0
 attempt = []
-banned = []
-throw -1
+banned  = []
+output  -1
 
-n = 1
+n       = 1
 attempt = []
-banned = []
-grow [1]
+banned  = []
+output [1]
 
-n = 1
+n       = 1
 attempt = []
-banned = [1]
-throw -1
+banned  = [1]
+output -1
 
+n = 4
+attempt = [2,4,1]
+banned  = []
+output  = [2,4,1,3]
+
+n       = 4
+attempt = [3,1,4]
+banned  = []
+output  = [3,1,4,2]
+
+n       = 4
+attempt = [2,4,1]
+banned  = [2,4,1,3]
+output  = -1
+
+n       = 5
+attempt = [2,4,1,3]
+banned  = [2,4,1,3,5]
+output  = -1
+
+n       = 5
+attempt = [3,1,4,2]
+banned  = []
+output  = [3,1,4,2,5]
 
 ```
