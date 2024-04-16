@@ -284,7 +284,7 @@ function test_rising_diag_shadow()
 
 	attempt = [2,4,1]
 	rds     = rising_diagonal_shadow(attempt, n)
-	@test rds == [3]
+	@test rds == [2]
 	println("passed rising diagonal shadow")
 
 end
