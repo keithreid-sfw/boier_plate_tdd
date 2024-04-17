@@ -1,3 +1,4 @@
+                                             # do not write past close bracket ]
 #			0 LIBS
 
 using Test
@@ -138,12 +139,6 @@ function test_maybe_add_solution()
 
 	println("passed maybe add solution")
 
-
-
-
-
-	
-
 end
 
 function test_init_attempt()
@@ -201,46 +196,47 @@ end
 
 function test_grow_or_throw()
 
-	n       = 0
+	n       = 0    # null
 	attempt = []
 	banned  = []
 	output  = -1
 
-	n       = 1
+	n       = 1     # singleton before first instance
 	attempt = []
 	banned  = []
 	output  = [1]
 
-	n       = 1
+	n       = 1     # singleton after instance means ban
 	attempt = []
 	banned  = [1]
 	output  = -1
 
-	n       = 4
-	attempt = [2,4,1]
-	banned  = []
-	output  = [2,4,1,3]
+	n       = 4              # ####  ####
+	attempt = [2,4,1]        # ####  ####
+	banned  = []             # ####  ####
+	output  = [2,4,1,3]      # ####  ####
 
-	n       = 4
-	attempt = [3,1,4]
-	banned  = []
-	output  = [3,1,4,2]
+	n       = 4              # ####  #### 
+	attempt = [3,1,4]        # ####  ####
+	banned  = []             # ####  ####
+	output  = [3,1,4,2]      # ####  ####
 
-	n       = 4
-	attempt = [2,4,1]
-	banned  = [2,4,1,3]
-	output  = -1
+	n       = 4              # ####  ####
+	attempt = [2,4,1]        # ####  ####
+	banned  = [2,4,1,3]      # ####  ####
+	output  = -1             # ####  ####
 
-	n       = 5
-	attempt = [2,4,1,3]
-	banned  = [2,4,1,3,5]
-	output  = -1
+	n       = 5              # ##### #####
+	attempt = [2,4,1,3]      # ##### #####
+	banned  = [2,4,1,3,5]    # ##### #####
+	output  = -1             # ##### #####
+                                 # ##### #####
 
-	n       = 5
-	attempt = [3,1,4,2]
-	banned  = []
-	output  = [3,1,4,2,5]
-end
+	n       = 5              # ##### #####
+	attempt = [3,1,4,2]      # ##### #####
+	banned  = []             # ##### #####
+	output  = [3,1,4,2,5]    # ##### #####
+end                              # ##### #####
 
 #test_grow_or_throw()
 
