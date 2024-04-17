@@ -310,6 +310,7 @@ function test_falling_diagonal_shadow()
 	
 	attempt = [1]
 	fds     = falling_diagonal_shadow(attempt, n)
+	@test fds == [2]
 
 	attempt = [2]
 	fds     = falling_diagonal_shadow(attempt, n)
