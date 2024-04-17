@@ -278,7 +278,7 @@ function test_rising_diag_shadow()
 	rds     = rising_diagonal_shadow(attempt, n)
 	@test rds == [3]
 
-      x
+  #    x
   #  #/
   #  2#
   #  ##3
@@ -288,7 +288,8 @@ function test_rising_diag_shadow()
 	rds     = rising_diagonal_shadow(attempt, n)
 	@test rds == [2]
 
-  # ##1
+  #   xx
+  # #/1
   # 2##2
   # ##/
   # #4#
